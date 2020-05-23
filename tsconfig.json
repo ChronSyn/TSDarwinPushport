@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "module": "commonjs",
+    "target": "es2018",
+    "baseUrl": "./",
+    "rootDir": "./src/",
+    "outDir": "./build/",
+    "declarationDir": "./build/",
+    "declaration": true,
+    "paths": {
+      "@Modules*": ["src/modules/*"]
+    },
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "ts-optchain/transform" }
+    ]
+  },
+  "include": [
+    "./**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
