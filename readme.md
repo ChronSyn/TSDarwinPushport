@@ -4,7 +4,11 @@
 
 ## Documentation
 
-See the `/docs` folder for full documentation.
+Network Rail Feeds Registration: https://datafeeds.networkrail.co.uk/ntrod/
+
+National Rail Feeds Registration: https://opendata.nationalrail.co.uk/
+
+Library documentation: https://chronsyn.github.io/TSDarwinPushport/
 
 ## Usage
 
