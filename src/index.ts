@@ -1,13 +1,13 @@
 import "module-alias/register";
-import {
-  PushportClient as PushportClientNetworkRail
-} from "./modules/NetworkRail/Pushport.Stomp";
 
-import {
-  IPushPortSubscription as IPushPortSubscriptionNetworkRail
-} from "./modules/NetworkRail/interfaces";
+import { PushportClient as PushportClientNationalRail } from "@ModulesNationalRail/PushPort.Stomp";
+import { PushportClient as PushportClientNetworkRail } from "@Modules/NetworkRail/Pushport.Stomp";
+import { IPushPortSubscription as INationalRailTopic } from "@Modules/CommonInterfaces";
+import { INetworkRailTopic } from "@Modules/NetworkRail/interfaces";
 
 export {
-  IPushPortSubscriptionNetworkRail,
-  PushportClientNetworkRail
+  INetworkRailTopic,
+  INationalRailTopic,
+  PushportClientNetworkRail,
+  PushportClientNationalRail
 };

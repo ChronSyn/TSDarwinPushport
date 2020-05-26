@@ -1,7 +1,7 @@
-require("dotenv").config();
 import { StompClient as _StompClient } from "stomp-client";
-import { IPushPortSubscription, IPushPortConstructorArgs } from "./interfaces";
+import { IPushPortConstructorArgs, INetworkRailTopic } from "./interfaces";
 import uniqBy from "lodash/uniqBy";
+import { IPushPortSubscription, EMessageSource } from "@Modules/CommonInterfaces";
 
 export class PushportClient {
   private Client: typeof _StompClient;
@@ -11,7 +11,8 @@ export class PushportClient {
       user,
       host = "datafeeds.networkrail.co.uk",
       port = 61618,
-      protocolVersion = "1.0"
+      protocolVersion = "1.0",
+      topics = []
     } = args;
     if (!pass || !user || !host || !port || !protocolVersion) {
       throw new Error(
@@ -25,20 +26,30 @@ export class PushportClient {
       pass,
       protocolVersion
     });
+
+    this.subscribe(topics);
   }
 
-  public subscribe = (topics: IPushPortSubscription[]): void => {
+  private subscribe = (topics: IPushPortSubscription[]): void => {
     this.Client.connect(() => {
-      const subTopics = uniqBy(topics, ({topic}) => topic);
-      console.log(subTopics);
-      subTopics.forEach(({topic, responseAsJson, callback}) => {
-        this.Client.subscribe(
-          topic,
-          (body, headers) => callback({
-            body: responseAsJson ? JSON.parse(body) : body,
-            headers: responseAsJson ? JSON.parse(JSON.stringify(headers)) : headers
-          })
-        )
+      const subTopics: INetworkRailTopic[] = uniqBy(topics, ({topic}) => topic);
+      subTopics.forEach(({topic, responseAsJson, onError, onMessage}) => {
+        try {
+          this.Client.subscribe(
+            topic,
+            (body, headers) => onMessage({
+              source: EMessageSource.NETWORK_RAIL,
+              channel: topic,
+              topic: topic.slice(7),
+              data: {
+                headers,
+                body: responseAsJson ? JSON.parse(body) : body
+              }
+            })
+          )
+        } catch(error) {
+          onError(error);
+        }
       });
     });
   }

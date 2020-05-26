@@ -1,0 +1,215 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>tsdarwinpushport</title>
+	<meta name="description" content="Documentation for tsdarwinpushport">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">tsdarwinpushport</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1>tsdarwinpushport</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#beta-railscope-api-pushport" id="beta-railscope-api-pushport" style="color: inherit; text-decoration: none;">
+					<h1>[BETA] Railscope API Pushport</h1>
+				</a>
+				<p>[BETA] A node.js library for receiving data from the National Rail and Network Rail live data feeds.</p>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>See the <code>/docs</code> folder for full documentation.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>Create a <code>.env</code> file (or add to an existing one) with these properties;</p>
+				<pre><code><span class="hljs-attr">NETWORK_RAIL_USER</span>=<span class="hljs-string">"&lt;Username used to login to Network Rail&gt;"</span>
+<span class="hljs-attr">NETWORK_RAIL_PASS</span>=<span class="hljs-string">"&lt;Password used to login to Network Rail&gt;"</span>
+
+<span class="hljs-attr">NATIONAL_RAIL_USER</span>=<span class="hljs-string">"&lt;National Rail Feed Username&gt;"</span>
+<span class="hljs-attr">NATIONAL_RAIL_PASS</span>=<span class="hljs-string">"&lt;National Rail Feed Password&gt;"</span>
+<span class="hljs-attr">NATIONAL_RAIL_HOST</span>=<span class="hljs-string">"&lt;National Rail Feed Host&gt;"</span></code></pre><p>Then, see the example below.</p>
+				<p>This is a simple example of subscribing to both National Rail and Network Rail data feeds (also available in <code>src/example.ts</code>)</p>
+				<pre><code><span class="hljs-built_in">require</span>(<span class="hljs-string">"dotenv"</span>).config();
+
+<span class="hljs-keyword">import</span> {
+  INetworkRailTopic,
+  INationalRailTopic,
+  PushportClientNetworkRail,
+  PushportClientNationalRail
+} <span class="hljs-keyword">from</span> <span class="hljs-string">"TSDarwinPushport"</span>;
+
+
+const NationalRailTopics: INationalRailTopic[] = [
+  {
+    topic: <span class="hljs-string">"/topic/darwin.pushport-v16"</span>,
+    onError: <span class="hljs-function"><span class="hljs-params">(err)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log({err}),
+    onMessage: <span class="hljs-function"><span class="hljs-params">(message)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(message.source, {message})
+  }
+]
+const NationalRailSingleton = <span class="hljs-keyword">new</span> PushportClientNationalRail({
+  user: process.env.NATIONAL_RAIL_USER,
+  pass: process.env.NATIONAL_RAIL_PASS,
+  host: process.env.NATIONAL_RAIL_HOST,
+  port: <span class="hljs-number">61613</span>,
+  topics: NationalRailTopics
+});
+
+
+const NetworkRailTopics: INetworkRailTopic[] = [
+  {
+    topic: <span class="hljs-string">"/topic/TD_ALL_SIG_AREA"</span>,
+    responseAsJson: <span class="hljs-literal">true</span>,
+    onError: <span class="hljs-function"><span class="hljs-params">(err)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log({err}),
+    onMessage: <span class="hljs-function"><span class="hljs-params">(message)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(message.source, {message})
+  },
+  {
+    topic: <span class="hljs-string">"/topic/RTPPM_ALL"</span>,
+    responseAsJson: <span class="hljs-literal">true</span>,
+    onError: <span class="hljs-function"><span class="hljs-params">(err)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log({err}),
+    onMessage: <span class="hljs-function"><span class="hljs-params">(message)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(message.source, {message})
+  }
+]
+const NetworkRailSingleton = <span class="hljs-keyword">new</span> PushportClientNetworkRail({
+  user: process.env.NETWORK_RAIL_USER,
+  pass: process.env.NETWORK_RAIL_PASS,
+  host: <span class="hljs-string">"datafeeds.networkrail.co.uk"</span>,
+  port: <span class="hljs-number">61618</span>,
+  protocolVersion: <span class="hljs-string">"1.0"</span>,
+  topics: NetworkRailTopics
+});</code></pre><p>In this example, both <code>RTPPM_ALL</code> and <code>TD_ALL_SIG_AREA</code> topics from Network Rail will have their output logged to console. National Rail only provides a single topic, (<code>/topic/darwin.pushport-v16</code>), and this includes all messages that your account is subscribed for.</p>
+				<p>For network rail, you can omit <code>responseAsJson</code> (or set the parameter to a non-truthy value) if you wish to have the string content returned instead. This option is not available for the National Rail subscriber. This is due to the usage of 2 different libraries to allow compatibility with both services.</p>
+				<p>You can subscribe to as many feeds/topics as you wish with one connection. Note that you must provide the full topic path, including the <code>/topic</code> prefix (if necessary).</p>
+				<a href="#data-structure" id="data-structure" style="color: inherit; text-decoration: none;">
+					<h2>Data structure</h2>
+				</a>
+				<p>Each message returned from the subscription will have the following properties:</p>
+				<ul>
+					<li><p>source
+						Either <code>NATIONAL_RAIL</code> or <code>NETWORK_RAIL</code>, depending upon which provider the data is from.</p>
+					</li>
+					<li><p>channel
+						The full topic name, including the <code>/topic/</code> prefix</p>
+					</li>
+					<li><p>topic
+						The topic name only, excluding the <code>/topic/</code> prefix</p>
+					</li>
+					<li><p>data
+						The data sent by the message. This will includes a <code>headers</code> and <code>body</code> property. Note that only the Network Rail subscriber provide headers, while the National Rail provider simply returns null.</p>
+					</li>
+				</ul>
+				<p>It is important that if trying to access <code>headers</code>, you check for null before trying to access more data further down the object tree.</p>
+				<a href="#notes" id="notes" style="color: inherit; text-decoration: none;">
+					<h2>Notes</h2>
+				</a>
+				<p>This library does not perform any parsing on the messages, other than converting them to JSON and extracting the main element from the message.</p>
+				<p>For Network Rail, the entire message body is returned. For National Rail, only data from the <code>data.Pport.uR</code> object is returned. If this path in the structure is undefined or unavailable, null will be returned.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_modules_commoninterfaces_.html">&quot;modules/<wbr>Common<wbr>Interfaces&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_modules_nationalrail_pushport_stomp_.html">&quot;modules/<wbr>National<wbr>Rail/<wbr>Push<wbr>Port.<wbr>Stomp&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_modules_nationalrail_interfaces_.html">&quot;modules/<wbr>National<wbr>Rail/interfaces&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_modules_networkrail_pushport_stomp_.html">&quot;modules/<wbr>Network<wbr>Rail/<wbr>Pushport.<wbr>Stomp&quot;</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_modules_networkrail_interfaces_.html">&quot;modules/<wbr>Network<wbr>Rail/interfaces&quot;</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

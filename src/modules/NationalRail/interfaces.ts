@@ -1,14 +1,10 @@
 import { IPushPortSubscription } from "@Modules/CommonInterfaces";
 
-export interface INetworkRailTopic extends IPushPortSubscription {
-  responseAsJson?: boolean;
-}
-
 export interface IPushPortConstructorArgs {
   host?: string;
   port?: number;
+  heartbeat?: string;
   user: string;
   pass: string;
-  protocolVersion?: string;
-  topics: INetworkRailTopic[]
+  topics: IPushPortSubscription[]
 }
