@@ -377,6 +377,21 @@ ts-optchain@^0.1.8:
   resolved "https://registry.yarnpkg.com/ts-optchain/-/ts-optchain-0.1.8.tgz#4e97e3c07a98ac1d9c48715460d25a3df2addc59"
   integrity sha512-crvloFKZlPIysdVcP7Ej1w4HijBx7NmLdeorqfxOvt87DcUIbhKV4ZaSgCL+IQ+zzTgDx5zDuNHRvUbTIr9aqw==
 
+tsdarwinpushport@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tsdarwinpushport/-/tsdarwinpushport-1.0.0.tgz#f6bd0e7c667fbab9b1ac0760e252eab9161a2ffa"
+  integrity sha512-+Hbt/38Y2z3kcQ3rDVKgIlk/wnB+XLJKFrHxenEWn8iAOwyGK+fIOt++zx1AReViy4McjdZVH5aStdbWBhQubg==
+  dependencies:
+    "@openrailuk/stomp-client" "^1.0.1"
+    dotenv "^8.2.0"
+    lodash "^4.17.15"
+    module-alias "^2.2.2"
+    stomp-client "^0.9.0"
+    stompit "^1.0.0"
+    ts-node "^8.6.2"
+    typescript "^3.8.3"
+    xml2json "^0.12.0"
+
 ttypescript@^1.5.10:
   version "1.5.10"
   resolved "https://registry.yarnpkg.com/ttypescript/-/ttypescript-1.5.10.tgz#5045083a91cf09a735ecc95d4711c1f3b83f2059"
