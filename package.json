@@ -1,6 +1,6 @@
 {
   "name": "tsdarwinpushport",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A node.js library for receiving data streams from National Rail and Network Rail streaming systems",
   "types": "./build/index.d.ts",
   "main": "./build/index.js",
