@@ -25,6 +25,7 @@ class PushportClient {
                         }));
                     }
                     catch (error) {
+                        console.log("Called onError in networkRail at line 51");
                         onError(error);
                     }
                 });

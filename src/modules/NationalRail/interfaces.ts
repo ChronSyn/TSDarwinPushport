@@ -1,4 +1,5 @@
 import { IPushPortSubscription } from "@Modules/CommonInterfaces";
+import _StompClient from "stompit";
 
 export interface IPushPortConstructorArgs {
   host?: string;
@@ -6,5 +7,10 @@ export interface IPushPortConstructorArgs {
   heartbeat?: string;
   user: string;
   pass: string;
-  topics: IPushPortSubscription[]
+  topics: IPushPortSubscription[];
+  reconnectOnError?: boolean;
+  onStompError?: (error: _StompClient.ConnectFailover.ConnectError) => void;
+  onConnect?: (server: _StompClient.ConnectFailover.ConnectState) => void;
+  onConnecting?: (server: _StompClient.ConnectFailover.ConnectState) => void;
+  onConnectError?: (error: Error) => void;
 }

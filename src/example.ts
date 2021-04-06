@@ -1,48 +1,52 @@
 require("dotenv").config();
 
+import logger from "@Modules/Logging/logging.module";
 import {
-  INetworkRailTopic,
   INationalRailTopic,
-  PushportClientNetworkRail,
-  PushportClientNationalRail
+  PushportClientNationalRail,
 } from "TSDarwinPushport";
+import fs from "fs";
 
+const handlePushPostMessage = (message) => {
+  if (message.data.body.OW) {
+    const filename = `${__dirname}\\${new Date().getTime().toString()}.json`;
+    logger.log("debug", `Got a delay message! Logged to: ${filename}`);
+    fs.writeFileSync(filename, JSON.stringify(message, null, 2));
+  }
+};
 
 const NationalRailTopics: INationalRailTopic[] = [
   {
     topic: "/topic/darwin.pushport-v16",
-    onError: (err) => console.log({err}),
-    onMessage: (message) => console.log(message.source, {message})
-  }
-]
-const NationalRailSingleton = new PushportClientNationalRail({
-  user: process.env.NATIONAL_RAIL_USER,
-  pass: process.env.NATIONAL_RAIL_PASS,
-  host: process.env.NATIONAL_RAIL_HOST,
-  port: 61613,
-  topics: NationalRailTopics
-});
-
-
-const NetworkRailTopics: INetworkRailTopic[] = [
-  {
-    topic: "/topic/TD_ALL_SIG_AREA",
-    responseAsJson: true,
-    onError: (err) => console.log({err}),
-    onMessage: (message) => console.log(message.source, {message})
+    onError: (err) => {
+      if (err) {
+        logger.log("error", `An error occured with /topic/darwin.pushport-v16`);
+      }
+    },
+    onMessage: (message) => handlePushPostMessage(message),
   },
-  {
-    topic: "/topic/RTPPM_ALL",
-    responseAsJson: true,
-    onError: (err) => console.log({err}),
-    onMessage: (message) => console.log(message.source, {message})
-  }
-]
-const NetworkRailSingleton = new PushportClientNetworkRail({
-  user: process.env.NETWORK_RAIL_USER,
-  pass: process.env.NETWORK_RAIL_PASS,
-  host: "datafeeds.networkrail.co.uk",
-  port: 61618,
-  protocolVersion: "1.0",
-  topics: NetworkRailTopics
-});
+];
+export const NationalRailSingletonInit = () =>
+  new PushportClientNationalRail({
+    user: process.env.DARWIN_PUSHPORT_LOGIN,
+    pass: process.env.DARWIN_PUSHPORT_PASSWORD,
+    host: process.env.DARWIN_PUSHPORT_HOST,
+    port: 61613,
+    topics: NationalRailTopics,
+    onConnect: (server) => {
+      logger.log("debug", "Connected to National Rail STOMP");
+    },
+    onStompError: (error) => {
+      logger.log("error", `An error occured with STOMP: ${error.message}`);
+    },
+    onConnectError: (error) => {
+      logger.log(
+        "debug",
+        `An error occured while connecting to STOMP: ${error.message}`
+      );
+    },
+    onConnecting: (server) => {
+      logger.log("debug", "Attempting to connect to National Rail STOMP...");
+    },
+    reconnectOnError: true,
+  });

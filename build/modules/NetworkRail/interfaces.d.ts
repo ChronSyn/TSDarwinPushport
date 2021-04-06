@@ -1,4 +1,4 @@
-import { IPushPortSubscription } from "@Modules/CommonInterfaces";
+import { IPushPortSubscription } from "../CommonInterfaces";
 export interface INetworkRailTopic extends IPushPortSubscription {
     responseAsJson?: boolean;
 }

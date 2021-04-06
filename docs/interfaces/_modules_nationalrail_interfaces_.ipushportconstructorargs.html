@@ -86,8 +86,13 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#heartbeat" class="tsd-kind-icon">heartbeat</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#host" class="tsd-kind-icon">host</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onconnect" class="tsd-kind-icon">on<wbr>Connect</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onconnecterror" class="tsd-kind-icon">on<wbr>Connect<wbr>Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onconnecting" class="tsd-kind-icon">on<wbr>Connecting</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onstomperror" class="tsd-kind-icon">on<wbr>Stomp<wbr>Error</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#pass" class="tsd-kind-icon">pass</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#port" class="tsd-kind-icon">port</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#reconnectonerror" class="tsd-kind-icon">reconnect<wbr>OnError</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#topics" class="tsd-kind-icon">topics</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#user" class="tsd-kind-icon">user</a></li>
 							</ul>
@@ -103,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">heartbeat<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/2a66f94/src/modules/NationalRail/interfaces.ts#L6">modules/NationalRail/interfaces.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L7">modules/NationalRail/interfaces.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -113,9 +118,133 @@
 					<div class="tsd-signature tsd-kind-icon">host<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/2a66f94/src/modules/NationalRail/interfaces.ts#L4">modules/NationalRail/interfaces.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L5">modules/NationalRail/interfaces.ts:5</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="onconnect" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Connect</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Connect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>server<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectState</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L13">modules/NationalRail/interfaces.ts:13</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>server<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectState</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>server: <span class="tsd-signature-type">ConnectState</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="onconnecterror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Connect<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Connect<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L15">modules/NationalRail/interfaces.ts:15</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Error</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>error: <span class="tsd-signature-type">Error</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="onconnecting" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Connecting</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Connecting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>server<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectState</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L14">modules/NationalRail/interfaces.ts:14</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>server<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectState</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>server: <span class="tsd-signature-type">ConnectState</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="onstomperror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Stomp<wbr>Error</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Stomp<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectError</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L12">modules/NationalRail/interfaces.ts:12</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">ConnectError</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>error: <span class="tsd-signature-type">ConnectError</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="pass" class="tsd-anchor"></a>
@@ -123,7 +252,7 @@
 					<div class="tsd-signature tsd-kind-icon">pass<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/2a66f94/src/modules/NationalRail/interfaces.ts#L8">modules/NationalRail/interfaces.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L9">modules/NationalRail/interfaces.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -133,7 +262,17 @@
 					<div class="tsd-signature tsd-kind-icon">port<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/2a66f94/src/modules/NationalRail/interfaces.ts#L5">modules/NationalRail/interfaces.ts:5</a></li>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L6">modules/NationalRail/interfaces.ts:6</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="reconnectonerror" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> reconnect<wbr>OnError</h3>
+					<div class="tsd-signature tsd-kind-icon">reconnect<wbr>OnError<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L11">modules/NationalRail/interfaces.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -143,7 +282,7 @@
 					<div class="tsd-signature tsd-kind-icon">topics<span class="tsd-signature-symbol">:</span> <a href="_modules_commoninterfaces_.ipushportsubscription.html" class="tsd-signature-type">IPushPortSubscription</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/2a66f94/src/modules/NationalRail/interfaces.ts#L9">modules/NationalRail/interfaces.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L10">modules/NationalRail/interfaces.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -153,7 +292,7 @@
 					<div class="tsd-signature tsd-kind-icon">user<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/2a66f94/src/modules/NationalRail/interfaces.ts#L7">modules/NationalRail/interfaces.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/ChronSyn/TSDarwinPushport/blob/4ca1ea0/src/modules/NationalRail/interfaces.ts#L8">modules/NationalRail/interfaces.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -196,10 +335,25 @@
 								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#host" class="tsd-kind-icon">host</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onconnect" class="tsd-kind-icon">on<wbr>Connect</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onconnecterror" class="tsd-kind-icon">on<wbr>Connect<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onconnecting" class="tsd-kind-icon">on<wbr>Connecting</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#onstomperror" class="tsd-kind-icon">on<wbr>Stomp<wbr>Error</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#pass" class="tsd-kind-icon">pass</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#port" class="tsd-kind-icon">port</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#reconnectonerror" class="tsd-kind-icon">reconnect<wbr>OnError</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_modules_nationalrail_interfaces_.ipushportconstructorargs.html#topics" class="tsd-kind-icon">topics</a>

@@ -86,7 +86,9 @@
 				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
 					<h2>Documentation</h2>
 				</a>
-				<p>See the <code>/docs</code> folder for full documentation.</p>
+				<p>Network Rail Feeds Registration: <a href="https://datafeeds.networkrail.co.uk/ntrod/">https://datafeeds.networkrail.co.uk/ntrod/</a></p>
+				<p>National Rail Feeds Registration: <a href="https://opendata.nationalrail.co.uk/">https://opendata.nationalrail.co.uk/</a></p>
+				<p>Library documentation: <a href="https://chronsyn.github.io/TSDarwinPushport/">https://chronsyn.github.io/TSDarwinPushport/</a></p>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
@@ -97,57 +99,70 @@
 <span class="hljs-attr">NATIONAL_RAIL_USER</span>=<span class="hljs-string">"&lt;National Rail Feed Username&gt;"</span>
 <span class="hljs-attr">NATIONAL_RAIL_PASS</span>=<span class="hljs-string">"&lt;National Rail Feed Password&gt;"</span>
 <span class="hljs-attr">NATIONAL_RAIL_HOST</span>=<span class="hljs-string">"&lt;National Rail Feed Host&gt;"</span></code></pre><p>Then, see the example below.</p>
-				<p>This is a simple example of subscribing to both National Rail and Network Rail data feeds (also available in <code>src/example.ts</code>)</p>
-				<pre><code><span class="hljs-built_in">require</span>(<span class="hljs-string">"dotenv"</span>).config();
+				<p>This is a simple example of subscribing to National Rail data feeds (also available in <code>src/example.ts</code>) and logging messages to a file.</p>
+				<pre><code class="language-typescript"><span class="hljs-built_in">require</span>(<span class="hljs-string">"dotenv"</span>).config();
 
+<span class="hljs-keyword">import</span> logger <span class="hljs-keyword">from</span> <span class="hljs-string">"@Modules/Logging/logging.module"</span>;
 <span class="hljs-keyword">import</span> {
-  INetworkRailTopic,
   INationalRailTopic,
-  PushportClientNetworkRail,
-  PushportClientNationalRail
+  PushportClientNationalRail,
 } <span class="hljs-keyword">from</span> <span class="hljs-string">"TSDarwinPushport"</span>;
+<span class="hljs-keyword">import</span> fs <span class="hljs-keyword">from</span> <span class="hljs-string">"fs"</span>;
 
+<span class="hljs-keyword">const</span> handlePushPostMessage = <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (message.data.body.OW) {
+    <span class="hljs-keyword">const</span> filename = <span class="hljs-string">`<span class="hljs-subst">${__dirname}</span>\\<span class="hljs-subst">${<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getTime().toString()}</span>.json`</span>;
+    logger.log(<span class="hljs-string">"debug"</span>, <span class="hljs-string">`Got a delay message! Logged to: <span class="hljs-subst">${filename}</span>`</span>);
+    fs.writeFileSync(filename, <span class="hljs-built_in">JSON</span>.stringify(message, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
+  }
+};
 
-const NationalRailTopics: INationalRailTopic[] = [
+<span class="hljs-keyword">const</span> NationalRailTopics: INationalRailTopic[] = [
   {
     topic: <span class="hljs-string">"/topic/darwin.pushport-v16"</span>,
-    onError: <span class="hljs-function"><span class="hljs-params">(err)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log({err}),
-    onMessage: <span class="hljs-function"><span class="hljs-params">(message)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(message.source, {message})
-  }
-]
-const NationalRailSingleton = <span class="hljs-keyword">new</span> PushportClientNationalRail({
-  user: process.env.NATIONAL_RAIL_USER,
-  pass: process.env.NATIONAL_RAIL_PASS,
-  host: process.env.NATIONAL_RAIL_HOST,
-  port: <span class="hljs-number">61613</span>,
-  topics: NationalRailTopics
-});
-
-
-const NetworkRailTopics: INetworkRailTopic[] = [
-  {
-    topic: <span class="hljs-string">"/topic/TD_ALL_SIG_AREA"</span>,
-    responseAsJson: <span class="hljs-literal">true</span>,
-    onError: <span class="hljs-function"><span class="hljs-params">(err)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log({err}),
-    onMessage: <span class="hljs-function"><span class="hljs-params">(message)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(message.source, {message})
+    onError: <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> {
+      <span class="hljs-keyword">if</span> (err) {
+        logger.log(<span class="hljs-string">"error"</span>, <span class="hljs-string">`An error occured with /topic/darwin.pushport-v16`</span>);
+      }
+    },
+    onMessage: <span class="hljs-function">(<span class="hljs-params">message</span>) =&gt;</span> handlePushPostMessage(message),
   },
-  {
-    topic: <span class="hljs-string">"/topic/RTPPM_ALL"</span>,
-    responseAsJson: <span class="hljs-literal">true</span>,
-    onError: <span class="hljs-function"><span class="hljs-params">(err)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log({err}),
-    onMessage: <span class="hljs-function"><span class="hljs-params">(message)</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(message.source, {message})
-  }
-]
-const NetworkRailSingleton = <span class="hljs-keyword">new</span> PushportClientNetworkRail({
-  user: process.env.NETWORK_RAIL_USER,
-  pass: process.env.NETWORK_RAIL_PASS,
-  host: <span class="hljs-string">"datafeeds.networkrail.co.uk"</span>,
-  port: <span class="hljs-number">61618</span>,
-  protocolVersion: <span class="hljs-string">"1.0"</span>,
-  topics: NetworkRailTopics
-});</code></pre><p>In this example, both <code>RTPPM_ALL</code> and <code>TD_ALL_SIG_AREA</code> topics from Network Rail will have their output logged to console. National Rail only provides a single topic, (<code>/topic/darwin.pushport-v16</code>), and this includes all messages that your account is subscribed for.</p>
-				<p>For network rail, you can omit <code>responseAsJson</code> (or set the parameter to a non-truthy value) if you wish to have the string content returned instead. This option is not available for the National Rail subscriber. This is due to the usage of 2 different libraries to allow compatibility with both services.</p>
+];
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> NationalRailSingletonInit = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+  <span class="hljs-keyword">new</span> PushportClientNationalRail({
+    user: process.env.DARWIN_PUSHPORT_LOGIN,
+    pass: process.env.DARWIN_PUSHPORT_PASSWORD,
+    host: process.env.DARWIN_PUSHPORT_HOST,
+    port: <span class="hljs-number">61613</span>,
+    topics: NationalRailTopics,
+    onConnect: <span class="hljs-function">(<span class="hljs-params">server</span>) =&gt;</span> {
+      logger.log(<span class="hljs-string">"debug"</span>, <span class="hljs-string">"Connected to National Rail STOMP"</span>);
+    },
+    onStompError: <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+      logger.log(<span class="hljs-string">"error"</span>, <span class="hljs-string">`An error occured with STOMP: <span class="hljs-subst">${error.message}</span>`</span>);
+    },
+    onConnectError: <span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {
+      logger.log(
+        <span class="hljs-string">"debug"</span>,
+        <span class="hljs-string">`An error occured while connecting to STOMP: <span class="hljs-subst">${error.message}</span>`</span>
+      );
+    },
+    onConnecting: <span class="hljs-function">(<span class="hljs-params">server</span>) =&gt;</span> {
+      logger.log(<span class="hljs-string">"debug"</span>, <span class="hljs-string">"Attempting to connect to National Rail STOMP..."</span>);
+    },
+    reconnectOnError: <span class="hljs-literal">true</span>,
+  });</code></pre>
+				<p>In this example, we subscribe to National Rail feeds (via the <code>/topic/darwin.pushport-v16</code>), and when a message is received, we check if it is an <code>OW</code> message type (indicating a station message, commonly used to alert customers about delays or ongoing work at a station), and then write the message contents to a local file.</p>
+				<p>The use case for this would be to call <code>NationalRailSingletonInit()</code> when you wish to subscribe. At this time, this library doesn&#39;t support disconnecting - it is still in beta and a work in progress.</p>
 				<p>You can subscribe to as many feeds/topics as you wish with one connection. Note that you must provide the full topic path, including the <code>/topic</code> prefix (if necessary).</p>
+				<p><strong>As of version 1.0.2</strong>
+				Additional optional callbacks have been added to the constructor:</p>
+				<ul>
+					<li><code>onConnect</code>: Triggered when the connection to the feeds has succeeded</li>
+					<li><code>onStompError</code>: Triggered when an error occured with the STOMP client</li>
+					<li><code>onConnectError</code>: Triggered when there is an error connecting to the feeds</li>
+					<li><code>onConnecting</code>: Triggered when the STOMP client first attempts to connect.</li>
+				</ul>
 				<a href="#data-structure" id="data-structure" style="color: inherit; text-decoration: none;">
 					<h2>Data structure</h2>
 				</a>
@@ -163,7 +178,7 @@ const NetworkRailSingleton = <span class="hljs-keyword">new</span> PushportClien
 						The topic name only, excluding the <code>/topic/</code> prefix</p>
 					</li>
 					<li><p>data
-						The data sent by the message. This will includes a <code>headers</code> and <code>body</code> property. Note that only the Network Rail subscriber provide headers, while the National Rail provider simply returns null.</p>
+						The data sent by the message. This will includes a <code>headers</code> and <code>body</code> property. Note that only the Network Rail subscriber provide headers, while the National Rail provider simply returns null for headers.</p>
 					</li>
 				</ul>
 				<p>It is important that if trying to access <code>headers</code>, you check for null before trying to access more data further down the object tree.</p>
@@ -172,6 +187,8 @@ const NetworkRailSingleton = <span class="hljs-keyword">new</span> PushportClien
 				</a>
 				<p>This library does not perform any parsing on the messages, other than converting them to JSON and extracting the main element from the message.</p>
 				<p>For Network Rail, the entire message body is returned. For National Rail, only data from the <code>data.Pport.uR</code> object is returned. If this path in the structure is undefined or unavailable, null will be returned.</p>
+				<p>[Below added: April 2021]
+				Version 1.0.2 released. I&#39;m aware that the code inside the library is extremely messy. I am aiming to improve this in the near future.</p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
